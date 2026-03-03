@@ -14,12 +14,14 @@ try {
         $major = [int]$Matches[1]
         if ($major -ge 18) {
             Write-Host " ✅ $nodeVersion" -ForegroundColor Green
-        } else {
+        }
+        else {
             Write-Host " ⚠️ $nodeVersion (recommend 18+)" -ForegroundColor Yellow
             $warnings += "Node.js version should be 18 or higher"
         }
     }
-} catch {
+}
+catch {
     Write-Host " ❌ Not found" -ForegroundColor Red
     $errors += "Node.js is not installed"
 }
@@ -29,7 +31,8 @@ Write-Host "Checking npm..." -NoNewline
 try {
     $npmVersion = npm --version
     Write-Host " ✅ v$npmVersion" -ForegroundColor Green
-} catch {
+}
+catch {
     Write-Host " ❌ Not found" -ForegroundColor Red
     $errors += "npm is not installed"
 }
@@ -51,7 +54,8 @@ foreach ($file in $criticalFiles) {
     Write-Host "  $file..." -NoNewline
     if (Test-Path $file) {
         Write-Host " ✅" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host " ❌" -ForegroundColor Red
         $errors += "Missing file: $file"
     }
@@ -76,12 +80,14 @@ if (Test-Path ".env.local") {
         Write-Host "    $var..." -NoNewline
         if ($envContent -match "$var=.+") {
             Write-Host " ✅" -ForegroundColor Green
-        } else {
+        }
+        else {
             Write-Host " ⚠️ Not set" -ForegroundColor Yellow
             $warnings += "$var not configured in .env.local"
         }
     }
-} else {
+}
+else {
     Write-Host " ⚠️ Not found" -ForegroundColor Yellow
     $warnings += "Create .env.local from .env.local.example"
 }
@@ -92,7 +98,8 @@ Write-Host "Checking dependencies..." -ForegroundColor Cyan
 Write-Host "  node_modules..." -NoNewline
 if (Test-Path "node_modules") {
     Write-Host " ✅ Installed" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host " ⚠️ Not installed" -ForegroundColor Yellow
     $warnings += "Run 'npm install' to install dependencies"
 }
@@ -113,7 +120,8 @@ foreach ($service in $services) {
     Write-Host "  $service..." -NoNewline
     if (Test-Path $service) {
         Write-Host " ✅" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host " ❌" -ForegroundColor Red
         $errors += "Missing service: $service"
     }
@@ -135,7 +143,8 @@ foreach ($migration in $migrations) {
     Write-Host "  $(Split-Path $migration -Leaf)..." -NoNewline
     if (Test-Path $migration) {
         Write-Host " ✅" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host " ❌" -ForegroundColor Red
         $errors += "Missing migration: $migration"
     }
@@ -155,7 +164,8 @@ if ($errors.Count -eq 0 -and $warnings.Count -eq 0) {
     Write-Host "  3. Run: npm run dev"
     Write-Host "  4. Visit: http://localhost:3000"
     Write-Host ""
-} else {
+}
+else {
     if ($errors.Count -gt 0) {
         Write-Host "❌ Errors found:" -ForegroundColor Red
         foreach ($error in $errors) {

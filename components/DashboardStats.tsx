@@ -40,12 +40,12 @@ export default function DashboardStatsComponent({ stats }: DashboardStatsProps) 
       {statCards.map((card) => (
         <div
           key={card.title}
-          className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+          className="glass-card p-6"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">{card.title}</p>
-              <p className="mt-2 text-3xl font-semibold text-gray-900">
+              <p className="text-sm font-medium text-slate-300">{card.title}</p>
+              <p className="mt-2 text-3xl font-semibold text-white">
                 {card.value}
               </p>
             </div>
@@ -57,19 +57,19 @@ export default function DashboardStatsComponent({ stats }: DashboardStatsProps) 
       ))}
 
       {/* Response Rate */}
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm md:col-span-2 lg:col-span-4">
-        <h3 className="mb-2 text-sm font-medium text-gray-600">
+      <div className="glass-card p-6 md:col-span-2 lg:col-span-4">
+        <h3 className="mb-2 text-sm font-medium text-slate-300">
           Response Rate
         </h3>
         <div className="flex items-end justify-between">
-          <p className="text-3xl font-semibold text-gray-900">
+          <p className="text-3xl font-semibold text-white">
             {stats.responseRate}%
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-slate-400">
             Based on interviews vs applications
           </p>
         </div>
-        <div className="mt-4 h-2 w-full rounded-full bg-gray-200">
+        <div className="mt-4 h-2 w-full rounded-full bg-slate-800">
           <div
             className="h-2 rounded-full bg-green-500"
             style={{ width: `${Math.min(stats.responseRate, 100)}%` }}

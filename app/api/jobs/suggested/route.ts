@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jobDiscoveryService } from '@/services/jobDiscovery.service'
+import { hasSupabaseConfig } from '@/lib/runtime'
 
 /**
  * GET /api/jobs/suggested
@@ -7,6 +8,14 @@ import { jobDiscoveryService } from '@/services/jobDiscovery.service'
  */
 export async function GET(request: NextRequest) {
   try {
+    if (!hasSupabaseConfig) {
+      return NextResponse.json({
+        jobs: [],
+        mode: 'mock',
+        message: 'Supabase is not configured. Returning mock suggestions.',
+      })
+    }
+
     // In production, get userId from authenticated session
     // For now, using a query parameter
     const userId = request.nextUrl.searchParams.get('userId')

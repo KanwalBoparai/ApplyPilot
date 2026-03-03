@@ -147,7 +147,36 @@ Browser → Next.js Frontend (Vercel)
 - [ ] Redis queue for job processing
 - [ ] Webhook integrations
 - [ ] Team collaboration features
-- [ ] Chrome extension
+- [x] Chrome side panel extension
+
+## 🧩 Chrome Extension (Split View on Any Website)
+
+The project now includes a Chrome extension at `chrome-extension/` that opens ApplyPilot in Chrome's Side Panel (split view).
+
+### Load the Extension (Developer Mode)
+1. Open Chrome and go to `chrome://extensions`
+2. Turn on **Developer mode** (top right)
+3. Click **Load unpacked**
+4. Select the folder: `chrome-extension`
+5. Pin **ApplyPilot Sidekick** from the extensions menu
+
+### Use It on Any Website
+1. Open any `http` or `https` website
+2. Click the ApplyPilot extension icon
+3. Chrome opens the side panel in split view
+4. In the panel, set **Backend URL**:
+    - local dev: `http://localhost:3000`
+    - deployed app: `https://<your-vercel-domain>`
+5. Click **Save**
+
+### Side Panel Actions
+- **Open Dashboard**: opens your ApplyPilot dashboard
+- **Open Jobs**: opens your jobs page
+- **Extract Job From Page**: captures page metadata and sends a job lead to `POST /api/jobs`
+
+### Notes
+- The panel is available on normal web pages (`http/https`).
+- Chrome does not allow forced auto-open on every tab without user interaction; clicking the extension icon opens it reliably.
 
 ## 🔧 API Endpoints
 

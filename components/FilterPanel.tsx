@@ -17,20 +17,20 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-lg font-semibold">Filters</h2>
+    <div className="glass-card p-6">
+      <h2 className="mb-4 text-lg font-semibold text-white">Filters</h2>
 
       {/* Work Type */}
       <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-sm font-medium text-slate-200">
           Work Type
         </label>
         <div className="space-y-2">
           {['remote', 'hybrid', 'onsite'].map((type) => (
-            <label key={type} className="flex items-center">
+            <label key={type} className="flex items-center text-slate-300">
               <input
                 type="checkbox"
-                className="mr-2 rounded border-gray-300"
+                className="mr-2 rounded border-slate-600 bg-slate-900"
                 onChange={(e) => {
                   const current = filters.workType || []
                   const updated = e.target.checked
@@ -47,16 +47,16 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
 
       {/* Role Type */}
       <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-sm font-medium text-slate-200">
           Role Type
         </label>
         <div className="space-y-2">
           {['engineering', 'design', 'product', 'sales', 'other'].map(
             (type) => (
-              <label key={type} className="flex items-center">
+              <label key={type} className="flex items-center text-slate-300">
                 <input
                   type="checkbox"
-                  className="mr-2 rounded border-gray-300"
+                  className="mr-2 rounded border-slate-600 bg-slate-900"
                   onChange={(e) => {
                     const current = filters.roleType || []
                     const updated = e.target.checked
@@ -74,15 +74,15 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
 
       {/* Term */}
       <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-sm font-medium text-slate-200">
           Employment Term
         </label>
         <div className="space-y-2">
           {['fulltime', 'parttime', 'contract', 'internship'].map((type) => (
-            <label key={type} className="flex items-center">
+            <label key={type} className="flex items-center text-slate-300">
               <input
                 type="checkbox"
-                className="mr-2 rounded border-gray-300"
+                className="mr-2 rounded border-slate-600 bg-slate-900"
                 onChange={(e) => {
                   const current = filters.term || []
                   const updated = e.target.checked
@@ -105,13 +105,13 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
 
       {/* Min Salary */}
       <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-sm font-medium text-slate-200">
           Minimum Salary
         </label>
         <input
           type="number"
           placeholder="e.g. 100000"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="w-full rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none"
           onChange={(e) =>
             handleChange('minSalary', parseInt(e.target.value) || undefined)
           }
@@ -120,13 +120,13 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
 
       {/* Graduation Year */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-sm font-medium text-slate-200">
           Graduation Year (for new grads)
         </label>
         <input
           type="number"
           placeholder="e.g. 2026"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="w-full rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none"
           onChange={(e) =>
             handleChange('year', parseInt(e.target.value) || undefined)
           }

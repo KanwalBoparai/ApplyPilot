@@ -14,39 +14,77 @@ export default function DashboardPage() {
   >([])
   const [loading, setLoading] = useState(true)
 
-  // Mock user ID - in production, get from auth
-  const userId = 'demo-user-id'
-
   useEffect(() => {
-    // Fetch dashboard data
-    // For now, using mock data
-    setStats({
-      totalApplications: 24,
-      suggestedJobs: 15,
-      interviewsScheduled: 3,
-      responseRate: 12.5,
-      weeklyApplications: 8,
-      emailReplies: 2,
-    })
+    const loadDashboard = async () => {
+      try {
+        const [jobsRes, applicationsRes] = await Promise.all([
+          fetch('/api/jobs'),
+          fetch('/api/apply/applications?userId=demo'),
+        ])
 
-    setRecentApplications([])
-    setLoading(false)
+        const jobsData = await jobsRes.json()
+        const applicationsData = await applicationsRes.json()
+
+        const applications = applicationsData.applications || []
+        const interviews = applications.filter(
+          (application: any) => application.status === 'interview'
+        ).length
+        const weeklyApplications = applications.filter((application: any) => {
+          if (!application.created_at) return false
+          const createdAt = new Date(application.created_at)
+          const sevenDaysAgo = new Date()
+          sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+          return createdAt >= sevenDaysAgo
+        }).length
+
+        const totalApplications = applications.length
+        const responseRate = totalApplications
+          ? Number(((interviews / totalApplications) * 100).toFixed(1))
+          : 0
+
+        setStats({
+          totalApplications,
+          suggestedJobs: (jobsData.jobs || []).length,
+          interviewsScheduled: interviews,
+          responseRate,
+          weeklyApplications,
+          emailReplies: 0,
+        })
+
+        setRecentApplications(applications.slice(0, 5))
+      } catch (error) {
+        console.error('Error loading dashboard:', error)
+        setStats({
+          totalApplications: 0,
+          suggestedJobs: 0,
+          interviewsScheduled: 0,
+          responseRate: 0,
+          weeklyApplications: 0,
+          emailReplies: 0,
+        })
+        setRecentApplications([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadDashboard()
   }, [])
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
+      <div className="app-shell flex min-h-screen items-center justify-center">
+        <p className="text-slate-300">Loading...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="app-shell">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-semibold text-white">Dashboard</h1>
+          <p className="text-slate-300">
             Track your job applications and success metrics
           </p>
         </div>
@@ -62,53 +100,53 @@ export default function DashboardPage() {
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           <Link
             href="/jobs"
-            className="group flex items-center justify-between rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+            className="glass-card group flex items-center justify-between p-6 transition hover:border-cyan-300/40"
           >
             <div>
-              <h3 className="font-semibold text-gray-900">Browse Jobs</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="font-semibold text-white">Browse Jobs</h3>
+              <p className="text-sm text-slate-300">
                 Find your next opportunity
               </p>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 transition-colors group-hover:text-blue-600" />
+            <ArrowRight className="h-5 w-5 text-slate-400 transition-colors group-hover:text-cyan-300" />
           </Link>
 
           <Link
             href="/settings"
-            className="group flex items-center justify-between rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+            className="glass-card group flex items-center justify-between p-6 transition hover:border-cyan-300/40"
           >
             <div>
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-white">
                 Upload Resume
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-300">
                 Update your profile
               </p>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 transition-colors group-hover:text-blue-600" />
+            <ArrowRight className="h-5 w-5 text-slate-400 transition-colors group-hover:text-cyan-300" />
           </Link>
 
           <Link
             href="/dashboard"
-            className="group flex items-center justify-between rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+            className="glass-card group flex items-center justify-between p-6 transition hover:border-cyan-300/40"
           >
             <div>
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-white">
                 View Applications
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-300">
                 Track your progress
               </p>
             </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 transition-colors group-hover:text-blue-600" />
+            <ArrowRight className="h-5 w-5 text-slate-400 transition-colors group-hover:text-cyan-300" />
           </Link>
         </div>
 
         {/* Recent Activity */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold">Recent Applications</h2>
+        <div className="glass-card p-6">
+          <h2 className="mb-4 text-xl font-semibold text-white">Recent Applications</h2>
           {recentApplications.length === 0 ? (
-            <p className="text-gray-600">
+            <p className="text-slate-300">
               No applications yet. Start applying to jobs!
             </p>
           ) : (

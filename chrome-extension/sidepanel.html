@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApplyPilot</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>ApplyPilot</h1>
+        <p>Your split-view job assistant</p>
+      </header>
+
+      <section class="card">
+        <label for="apiBaseUrl">Backend URL</label>
+        <input id="apiBaseUrl" type="url" placeholder="http://localhost:3000" />
+        <button id="saveConfig" class="button">Save</button>
+      </section>
+
+      <section class="card">
+        <h2>Current Tab</h2>
+        <p id="tabTitle" class="muted">-</p>
+        <p id="tabUrl" class="muted small">-</p>
+      </section>
+
+      <section class="card grid">
+        <button id="openDashboard" class="button">Open Dashboard</button>
+        <button id="openJobs" class="button">Open Jobs</button>
+        <button id="extractJob" class="button button-secondary">Extract Job From Page</button>
+      </section>
+
+      <section class="card">
+        <h2>Status</h2>
+        <p id="status" class="muted">Ready.</p>
+      </section>
+    </main>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

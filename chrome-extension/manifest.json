@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "ApplyPilot Sidekick",
+  "version": "0.1.0",
+  "description": "Split-view job application assistant on every website.",
+  "permissions": ["sidePanel", "storage", "tabs", "activeTab", "scripting"],
+  "host_permissions": [
+    "<all_urls>",
+    "http://localhost:3000/*",
+    "https://*.vercel.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open ApplyPilot"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-extractor.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

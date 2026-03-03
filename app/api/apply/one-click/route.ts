@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { applicationService } from '@/services/application.service'
+import { hasAIConfig, hasSupabaseConfig } from '@/lib/runtime'
 
 /**
  * POST /api/apply/one-click
@@ -8,6 +9,16 @@ import { applicationService } from '@/services/application.service'
 export async function POST(request: NextRequest) {
   try {
     const { userId, jobId } = await request.json()
+
+    if (!hasSupabaseConfig || !hasAIConfig) {
+      return NextResponse.json({
+        coverLetter:
+          'Mock cover letter: Configure OPENAI_API_KEY and Supabase to generate real personalized content.',
+        outreachDraftId: 'mock-outreach-draft-id',
+        applyUrl: 'https://example.com/apply',
+        mode: 'mock',
+      })
+    }
 
     if (!userId || !jobId) {
       return NextResponse.json(

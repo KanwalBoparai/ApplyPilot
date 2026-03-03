@@ -1,4 +1,4 @@
-import { openai, DEFAULT_MODEL } from '@/lib/openai'
+import { generateText, generateJSON } from '@/lib/ai'
 import { supabaseAdmin } from '@/lib/supabase'
 import { ResumeData } from '@/types/profile'
 
@@ -14,7 +14,7 @@ import { ResumeData } from '@/types/profile'
 
 export class ResumeService {
   /**
-   * Parse resume text to structured JSON using OpenAI
+   * Parse resume text to structured JSON using Gemini
    */
   async parseResume(resumeText: string): Promise<ResumeData> {
     const prompt = `You are an expert resume parser. Extract structured information from the following resume.
@@ -53,19 +53,7 @@ Return ONLY valid JSON with this exact structure:
   "summary": "Brief professional summary"
 }`
 
-    const response = await openai.chat.completions.create({
-      model: DEFAULT_MODEL,
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.3,
-      response_format: { type: 'json_object' },
-    })
-
-    const content = response.choices[0].message.content
-    if (!content) {
-      throw new Error('Failed to parse resume')
-    }
-
-    return JSON.parse(content) as ResumeData
+    return await generateJSON<ResumeData>(prompt)
   }
 
   /**
@@ -96,13 +84,7 @@ Requirements:
 - Do not include address or contact information (will be added separately)
 - Start with "Dear Hiring Manager," or similar`
 
-    const response = await openai.chat.completions.create({
-      model: DEFAULT_MODEL,
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-    })
-
-    return response.choices[0].message.content || ''
+    return await generateText(prompt)
   }
 
   /**
@@ -135,19 +117,11 @@ Return ONLY valid JSON with this structure:
 
 Where score is a percentage (0-100) of how well the candidate matches the role.`
 
-    const response = await openai.chat.completions.create({
-      model: DEFAULT_MODEL,
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.3,
-      response_format: { type: 'json_object' },
-    })
-
-    const content = response.choices[0].message.content
-    if (!content) {
-      throw new Error('Failed to analyze skills')
-    }
-
-    return JSON.parse(content)
+    return await generateJSON<{
+      matchingSkills: string[]
+      missingSkills: string[]
+      score: number
+    }>(prompt)
   }
 
   /**

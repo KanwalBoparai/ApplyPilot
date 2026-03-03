@@ -1,4 +1,4 @@
-import { openai, DEFAULT_MODEL } from '@/lib/openai'
+import { generateText } from '@/lib/ai'
 import { sendEmail } from '@/lib/email'
 import { supabaseAdmin } from '@/lib/supabase'
 import { OutreachTemplate, EmailPreview } from '@/types/outreach'
@@ -39,14 +39,7 @@ Requirements:
 - End with "Best regards,"
 - Do NOT include candidate name or contact info (will be added separately)`
 
-    const response = await openai.chat.completions.create({
-      model: DEFAULT_MODEL,
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-      max_tokens: 250,
-    })
-
-    const emailBody = response.choices[0].message.content || ''
+    const emailBody = await generateText(prompt)
 
     // Generate subject line
     const subject = `Application for ${jobTitle} at ${company}`

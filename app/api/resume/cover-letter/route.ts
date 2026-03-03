@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resumeService } from '@/services/resume.service'
+import { hasAIConfig, hasSupabaseConfig } from '@/lib/runtime'
 
 /**
  * POST /api/resume/cover-letter
@@ -8,6 +9,13 @@ import { resumeService } from '@/services/resume.service'
 export async function POST(request: NextRequest) {
   try {
     const { jobTitle, company, jobDescription, userId } = await request.json()
+
+    if (!hasAIConfig || !hasSupabaseConfig) {
+      return NextResponse.json({
+        coverLetter: `Dear Hiring Manager,\n\nI am excited to apply for the ${jobTitle || 'role'} position at ${company || 'your company'}. My background aligns well with your needs, and I would welcome the opportunity to contribute.\n\nBest regards,`,
+        mode: 'mock',
+      })
+    }
 
     if (!jobTitle || !company || !userId) {
       return NextResponse.json(

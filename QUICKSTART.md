@@ -2,7 +2,47 @@
 
 Welcome! This guide will get you up and running with the Job Application Agent in under 10 minutes.
 
-## 🎯 What You'll Build
+## � Demo Mode (No Setup Required!)
+
+The app runs in **demo mode** by default, with sample data built-in. Here's what you can do right now:
+
+### Browse Sample Jobs
+1. Run `npm run dev`
+2. Open http://localhost:3001 (or 3000)
+3. Click **"Open Dashboard"** → See mock stats (24 applications, 15 suggested jobs, 3 interviews)
+4. Click **"Browse Jobs"** → See 5 sample job listings
+5. Try the filters (work type, role, salary range) - they work even in demo mode!
+6. Click **"Apply Now"** on any job card (goes to apply flow)
+
+### Upload & Parse Resume
+1. Go to **Settings** page
+2. Upload any `.txt` file (paste your resume content)
+3. See it parsed into skills, experience, education (without OpenAI if not configured)
+4. Adjust "Preferred Locations" and "Target Companies" - saved locally
+
+### Chrome Extension (Demo)
+1. Open Chrome → `chrome://extensions`
+2. Enable **Developer mode** (toggle top-right)
+3. Click **"Load unpacked"**
+4. Select the `chrome-extension` folder from this project
+5. Visit any website → Click **ApplyPilot icon** → Side panel shows
+6. Set backend URL to `http://localhost:3001` (or 3000)
+7. Click **"Extract Job From Page"** → Extracts page title and meta info → Sends to app
+
+### What's Real vs. Mock?
+| Feature | Status | Details |
+|---------|--------|---------|
+| UI & Pages | ✅ Real | Full dark dashboard, jobs list, settings |
+| Sample Data | ✅ Real | 5 sample jobs, mock stats on dashboard |
+| Resume Parsing | 🟡 Basic | Splits by lines/keywords; needs OpenAI for advanced parsing |
+| Job Discovery | 🟡 Mock | Returns sample jobs; real discov needs Supabase |
+| Cover Letter Gen | 🟡 Template | Returns template; needs OpenAI for AI-generated letters |
+| Email Drafts | 🟡 Template | Returns template; needs OpenAI for AI emails |
+| Job Applications | 📝 Logged Locally | Tracks in memory; Supabase needed for persistence |
+
+---
+
+## �🎯 What You'll Build
 
 A cloud-ready job application platform that:
 - Parses resumes with AI

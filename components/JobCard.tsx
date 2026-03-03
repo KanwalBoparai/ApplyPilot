@@ -24,22 +24,22 @@ export default function JobCard({
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+    <div className="glass-card p-6 transition hover:border-cyan-300/40">
       <div className="mb-4">
-        <h3 className="text-xl font-semibold text-gray-900">{job.title}</h3>
-        <p className="text-lg text-gray-700">{job.company}</p>
+        <h3 className="text-xl font-semibold text-white">{job.title}</h3>
+        <p className="text-lg text-slate-300">{job.company}</p>
       </div>
 
       <div className="mb-4 space-y-2">
-        <div className="flex items-center text-sm text-gray-600">
+        <div className="flex items-center text-sm text-slate-300">
           <MapPin className="mr-2 h-4 w-4" />
           <span>{job.location}</span>
-          <span className="ml-2 rounded-full bg-gray-100 px-2 py-1 text-xs">
+          <span className="ml-2 rounded-full border border-slate-700 bg-slate-800 px-2 py-1 text-xs text-slate-200">
             {job.work_type}
           </span>
         </div>
 
-        <div className="flex items-center text-sm text-gray-600">
+        <div className="flex items-center text-sm text-slate-300">
           <Briefcase className="mr-2 h-4 w-4" />
           <span className="capitalize">{job.role_type}</span>
           <span className="ml-2 capitalize">• {job.term}</span>
@@ -47,7 +47,7 @@ export default function JobCard({
         </div>
 
         {formatSalary() && (
-          <div className="flex items-center text-sm text-gray-600">
+          <div className="flex items-center text-sm text-slate-300">
             <DollarSign className="mr-2 h-4 w-4" />
             <span>{formatSalary()}</span>
           </div>
@@ -55,19 +55,19 @@ export default function JobCard({
       </div>
 
       {job.description && (
-        <p className="mb-4 line-clamp-3 text-sm text-gray-600">
+        <p className="mb-4 line-clamp-3 text-sm text-slate-300">
           {job.description}
         </p>
       )}
 
       <div className="flex items-center justify-between">
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-slate-400">
           Source: {job.source}
         </span>
         {showApplyButton && onApply && (
           <button
             onClick={() => onApply(job.id)}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-cyan-300"
           >
             Apply Now
           </button>

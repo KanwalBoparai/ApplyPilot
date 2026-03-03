@@ -10,29 +10,31 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@neondatabase/serverless": "^1.0.2",
+    "@supabase/supabase-js": "^2.45.0",
+    "date-fns": "^3.6.0",
+    "lucide-react": "^0.428.0",
     "next": "14.2.3",
+    "openai": "^4.52.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "@supabase/supabase-js": "^2.45.0",
-    "openai": "^4.52.0",
-    "resend": "^3.2.0",
-    "zod": "^3.23.8",
-    "date-fns": "^3.6.0",
-    "recharts": "^2.12.7",
     "react-dropzone": "^14.2.3",
-    "lucide-react": "^0.428.0"
+    "recharts": "^2.12.7",
+    "resend": "^3.2.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5.5.3",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.6",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
+    "postcss": "^8.4.39",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.5"
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.3"
   }
 }

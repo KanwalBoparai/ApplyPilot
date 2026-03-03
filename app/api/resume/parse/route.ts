@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resumeService } from '@/services/resume.service'
+import { hasAIConfig } from '@/lib/runtime'
 
 /**
  * POST /api/resume/parse
@@ -8,6 +9,28 @@ import { resumeService } from '@/services/resume.service'
 export async function POST(request: NextRequest) {
   try {
     const { resumeText, userId } = await request.json()
+
+    if (!hasAIConfig) {
+      const lines = String(resumeText || '')
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean)
+
+      const mockResumeData = {
+        skills: lines
+          .filter((line) => /skills?/i.test(line))
+          .flatMap((line) => line.replace(/skills?:?/i, '').split(','))
+          .map((skill) => skill.trim())
+          .filter(Boolean),
+        experience: [],
+        projects: [],
+        education: [],
+        strengths: ['Quick learner', 'Strong communicator'],
+        summary: 'Mock parsed resume. Add OPENAI_API_KEY for full AI parsing.',
+      }
+
+      return NextResponse.json({ resumeData: mockResumeData, mode: 'mock' })
+    }
 
     if (!resumeText) {
       return NextResponse.json(

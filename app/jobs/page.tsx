@@ -42,9 +42,9 @@ export default function JobsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="mb-8 text-3xl font-bold text-gray-900">
+    <div className="app-shell">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <h1 className="mb-8 text-3xl font-semibold text-white">
           Browse Jobs
         </h1>
 
@@ -57,10 +57,10 @@ export default function JobsPage() {
           {/* Job List */}
           <div className="lg:col-span-3">
             {loading ? (
-              <p>Loading jobs...</p>
+              <div className="glass-card p-8 text-center text-slate-300">Loading jobs...</div>
             ) : jobs.length === 0 ? (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center">
-                <p className="text-gray-600">
+              <div className="glass-card p-8 text-center">
+                <p className="text-slate-300">
                   No jobs found. Try adjusting your filters.
                 </p>
               </div>
